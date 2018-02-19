@@ -13,7 +13,7 @@ const App = () => (
       <AppBar />
     </header>
     <main>
-      <Person />
+      <Person data={randomPerson} />
       <div style={{width: '75%'}}>
         <p>
           modify the <code>Person</code> component to display dynamic person data

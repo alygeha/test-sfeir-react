@@ -1,35 +1,23 @@
 import React from 'react';
+import Card from './Card';
 
-const Person = () => (
-  <section className="Card card">
-    <div className="card-content">
-      <img className="card-avatar" src="https://randomuser.me/portraits/women/81.jpg" alt="face of Mercedes" />
-      <div className="card-title">
-        <div>
-          <a href="/person/idOfMercedes">Mercedes Hebert</a>
-        </div>
-        <div className="card-subtitle">QUINTITY</div>
-      </div>
-      <div className="card-info">
-        <i className="material-icons" title="email">email</i>
-        <span>
-          <a href="mailto:Mercedes.Hebert@QUINTITY.com">Mercedes.Hebert@QUINTITY.com</a>
-        </span>
-      </div>
-      <div className="card-info">
-        <i className="material-icons" title="phone">phone</i>
-        <span>
-          <a href="tel:0125878522">0125878522</a>
-        </span>
-      </div>
-      <div className="card-info">
-        <i className="material-icons" title="manager">supervisor_account</i>
-        <span>
-          <a href="/person/idOfMclaughlin">Mclaughlin</a>
-        </span>
-      </div>
-    </div>
-  </section>
+const Person = ({ data }) => (
+  <Card>
+    <img className="card-avatar" src="https://randomuser.me/portraits/women/81.jpg" alt="face of Mercedes" />
+    <Card.Title subtitle={data.entity}>
+      <a href="/person/idOfMercedes">{data.firstname} {data.lastname}</a>
+    </Card.Title>
+    <Card.Info icon="email">
+      <a href={`mailto:${data.email}`}>{data.email}</a>
+    </Card.Info>
+    <Card.Info icon="phone">
+      <a href={`tel:${data.phone}`}>{data.phone}</a>
+    </Card.Info>
+    <Card.Info icon="supervisor_account" desc="manager">
+      <a href={`/person/${data.manager}`}>{data.manager}</a>  
+    </Card.Info>
+  </Card>
+
 );
 
 export default Person;
