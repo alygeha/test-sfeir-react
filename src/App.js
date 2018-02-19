@@ -5,6 +5,7 @@ import PEOPLE from './data/people.json';
 
 import AppBar from './components/AppBar';
 import Discover from './components/Discover';
+import ListAll from './components/ListAll'
 
 const App = () => (
   <div className="App">
@@ -12,7 +13,8 @@ const App = () => (
       <AppBar />
     </header>
     <main>
-      <Discover people={PEOPLE} />
+      <ListAll people={PEOPLE} />
+      {/* <Discover people={PEOPLE} /> */}
     </main>
   </div>
 );
