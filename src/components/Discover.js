@@ -7,8 +7,12 @@ const setNext = ({ current }, { people }) => ({
   current: (current + 1) % people.length
 });
 
-const Fab = ({ kind, large }) => (
-  <a className={`btn-default btn-floating waves-effect waves-light ${large && 'btn-large'}`}>
+const setPrevious = ({ current }, { people }) => ({
+  current: (current + people.length - 1) % people.length
+});
+
+const Fab = ({ kind, large, onclickHandler }) => (
+  <a className={`btn-default btn-floating waves-effect waves-light ${large && 'btn-large'}`} onClick={onclickHandler}>
     <i className="material-icons">{kind}</i>
   </a>
 );
@@ -19,14 +23,16 @@ class Discover extends Component {
     this.state = {
       current: 0
     }
+    this.showNext = () => this.setState(setNext);
+    this.showPrevious = () => this.setState(setPrevious);
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.setState(setNext), 2000);
+    //this.interval = setInterval(() => this.setState(setNext), 2000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    //clearInterval(this.interval);
   }
   
   render() {
@@ -38,7 +44,8 @@ class Discover extends Component {
           <Person person={people[current]} />
         </div>
         <div className="fab-container">
-          <Fab kind="skip_next" large />
+          <Fab kind="skip_previous" large onclickHandler={this.showPrevious}/>
+          <Fab kind="skip_next" large onclickHandler={this.showNext}/>
         {/*
           bonus: add these Fabs too
           and figure out how to switch between pause and play
