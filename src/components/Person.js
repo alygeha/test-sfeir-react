@@ -1,6 +1,8 @@
 import React from 'react';
+import Link from 'react-router-dom/Link';
 import * as PropTypes from 'prop-types';
 import Card from './Card';
+
 
 const Person = ({ person }) => (
   <Card>
@@ -17,7 +19,7 @@ const Person = ({ person }) => (
     </Card.Info>
     { person.managerId && (
       <Card.Info icon="supervisor_account" desc="manager">
-        <a href={`/person/${person.managerId}`}>{person.manager}</a>
+        <Link to={`/person/${person.managerId}`}>{person.manager}</Link>
       </Card.Info>
     )}
   </Card>  

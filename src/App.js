@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
+import Switch from 'react-router-dom/Switch';
+import { Redirect } from 'react-router-dom';
+import Route from 'react-router-dom/Route';
+
 import './App.css';
 
 import AppBar from './components/AppBar';
 import Discover from './components/Discover';
 import ListAll from './components/ListAll';
 import Spinner from './components/Spinner';
+import ShowPerson from './components/ShowPerson';
 
-const DISCOVER = 'discover';
-const LISTALL = 'show all';
+// const DISCOVER = 'discover';
+// const LISTALL = 'show all';
 
-const other = shown => shown === DISCOVER ? LISTALL : DISCOVER;
-const toggleShown = ({ shown }) => ({ shown: other(shown) });
+// const other = shown => shown === DISCOVER ? LISTALL : DISCOVER;
+// const toggleShown = ({ shown }) => ({ shown: other(shown) });
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      shown: LISTALL,
+    this.state = {     
       people: null
     };
   }
@@ -27,21 +31,25 @@ class App extends Component {
     .then(people => this.setState({ people }));
   }
 
-  toggleShown = () => this.setState(toggleShown);
+  // toggleShown = () => this.setState(toggleShown);
   
   render() {
-    const { shown, people } = this.state;
+    const { people } = this.state;
     return (
       <div className="App">
         <header>
-          <AppBar show={other(shown)} toggleShow={this.toggleShown}/>
+          <AppBar />
         </header>
         <main>
           { people === null
           ? <Spinner />
-          : shown === LISTALL
-          ? <ListAll people={people} />
-          : <Discover people={people} />
+          : <Switch>
+              <Route exact path="/discover" render={() =>  <Discover people={people} />} />
+              <Route path="/all" render={() =>  <ListAll people={people} />} />
+              <Route path="/person/:id" render={
+                ({match}) =>  <ShowPerson person={people.find(p => p.id === match.params.id)} />} />
+              <Redirect to="/all" />
+            </Switch>
           }
         </main>
       </div>
