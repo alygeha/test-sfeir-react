@@ -11,12 +11,6 @@ import ListAll from './components/ListAll';
 import Spinner from './components/Spinner';
 import ShowPerson from './components/ShowPerson';
 
-// const DISCOVER = 'discover';
-// const LISTALL = 'show all';
-
-// const other = shown => shown === DISCOVER ? LISTALL : DISCOVER;
-// const toggleShown = ({ shown }) => ({ shown: other(shown) });
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -31,8 +25,6 @@ class App extends Component {
     .then(people => this.setState({ people }));
   }
 
-  // toggleShown = () => this.setState(toggleShown);
-  
   render() {
     const { people } = this.state;
     return (
