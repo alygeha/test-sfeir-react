@@ -1,22 +1,12 @@
-import { PEOPLE_RECEIVED, PERSON_RECEIVED, SEARCH_CHANGED } from './actions';
-import { replaceOrPrependById } from '../utils';
+import { combineReducers } from 'redux';
 
-const initialState = {
-  people: [],
-  search: ''
-};
+import searchReducer from './searchReducer';
+import peopleReducer from './people/reducer';
+import { searchChanged } from './search/actions';
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case PEOPLE_RECEIVED:
-      return { ...state, people: action.people };
-    case PERSON_RECEIVED:
-      return { ...state, people: replaceOrPrependById(action.person, state.people) };
-    case SEARCH_CHANGED:
-      return { ...state, search: action.search };
-    default:
-      return state;
-  }
-};
+const reducer = combineReducers({
+  people: peopleReducer,
+  search: searchReducer,
+});
 
 export default reducer;
