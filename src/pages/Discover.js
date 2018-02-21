@@ -4,16 +4,6 @@ import { succ, pred } from '../utils';
 import PersonCard from '../components/PersonCard';
 import Fab from '../components/Fab';
 
-// state management
-
-const setNext = ({ current }, { people }) => ({
-  current: succ(current, 1, people.length)
-});
-
-const setPrev = ({ current }, { people }) => ({
-  current: pred(current, 1, people.length)
-});
-
 const play = () => ({
   playing: true
 });
@@ -46,17 +36,9 @@ class Discover extends Component {
     }
   }
 
-  showNextPerson = () => {
-    this.setState(setNext);
-  };
-  
-  showPreviousPerson = () => {
-    this.setState(setPrev);
-  };
-
   play = () => {
-    this.intervalId = setInterval(this.showNextPerson, 2000);
-    this.showNextPerson();
+    this.intervalId = setInterval(this.props.showNextPerson, 2000);
+    this.props.showNextPerson();
     this.setState(play);
   };
 
@@ -70,17 +52,17 @@ class Discover extends Component {
   }
   
   render() {
-    const { people } = this.props;
-    const { current, playing } = this.state;
+    const { person, showNextPerson, showPreviousPerson } = this.props;
+    const { playing } = this.state;
     return (
       <Fragment>
         <div className="card-container">
-          <PersonCard person={people[current - 1]} />
+          <PersonCard person={person} />
         </div>  
         <Fabs
           playing={playing}
-          next={this.showNextPerson}
-          prev={this.showPreviousPerson}
+          next={showNextPerson}
+          prev={showPreviousPerson}
           play={this.play}
           pause={this.pause}
         />
