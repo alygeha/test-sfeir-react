@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { compose, withStateHandlers, withProps } from 'recompose';
 import PersonCard from '../components/PersonCard';
 import SearchInput from '../components/SearchInput';
+
 
 // utils
 
@@ -12,16 +14,16 @@ const filterPerson = search => {
 
 // enhance
 
-const withSearchState = withStateHandlers(
-  { search: '' },
-  { searchChanged: () => event => ({ search: event.target.value }) }
-);
+const mapStateToProps = state => ({
+  filteredPeople: state.people.filter(filterPerson(state.search)),
+  search: state.search
+});
 
-const withFilteredPeople = withProps(props => ({
-  filteredPeople: props.people.filter(filterPerson(props.search))
-}));
+const mapDispatchToProps = dispatch => ({
+  searchChanged: event => dispatch({ type: 'SEARCH_CHANGED', search: event.target.value })
+});
 
-const enhance = compose(withSearchState, withFilteredPeople);
+const enhance = connect(mapStateToProps);
 
 // Component
 
@@ -42,5 +44,7 @@ const ListAll = ({ filteredPeople, search, searchChanged }) => (
     </div>
   </Fragment>
 );
+
+
 
 export default enhance(ListAll);

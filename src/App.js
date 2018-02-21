@@ -15,28 +15,19 @@ class App extends Component {
   }
 
   render() {
-    const { people, savePerson } = this.props;
+    const { isAppReady, savePerson } = this.props;
     return (
       <div className="App">
         <header>
           <AppBar />
         </header>
         <main>
-          { people.length === 0
+          { !isAppReady
           ? <Spinner />
           : <Switch>
-              <Route path="/all" render={() =>
-                <ListAll people={people} />
-              } />
-              <Route path="/discover" render={() =>
-                <Discover people={people} />
-              } />
-              <Route path="/person/:id" render={({match}) =>
-                <Person
-                  person={people.find(person => person.id === match.params.id)}
-                  onSave={savePerson}
-                />
-              } />
+              <Route path="/all" component={ListAll} />
+              <Route path="/discover" component={Discover} />
+              <Route path="/person/:id" component={Person} />
               <Redirect to="/all" />
             </Switch>
           }

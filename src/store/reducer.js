@@ -1,15 +1,18 @@
 import { replaceOrPrependById } from '../utils';
 
 const initialState = {
+  search: '',
   people: []
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'PEOPLE_RECEIVED':
-      return { people: action.people };
+      return {...state, people: action.people };
     case 'PERSON_RECEIVED':
-      return { people: replaceOrPrependById(action.person, state.people) };
+      return { ...state, people: replaceOrPrependById(action.person, state.people) };
+    case 'SEARCH_CHANGED':
+      return { ...state, search: action.search };
     default:
       return state;
   }

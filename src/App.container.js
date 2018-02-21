@@ -6,7 +6,7 @@ import { fetchPeople, updatePerson } from './service/people';
 import App from './App';
 
 const mapStateToProps = state => ({
-  people: state.people
+  isAppReady: state.people.length > 0
 });
 
 const mapDispatchToProps = dispatch => ({
